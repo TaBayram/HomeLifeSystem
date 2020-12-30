@@ -133,6 +133,12 @@
     <Compile Include="CreateRequest.Designer.cs">
       <DependentUpon>CreateRequest.cs</DependentUpon>
     </Compile>
+    <Compile Include="DatabaseConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DatabaseConfig.Designer.cs">
+      <DependentUpon>DatabaseConfig.cs</DependentUpon>
+    </Compile>
     <Compile Include="Event.cs" />
     <Compile Include="Housework.cs" />
     <Compile Include="NotePaper.cs">
@@ -259,6 +265,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CreateRequest.resx">
       <DependentUpon>CreateRequest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DatabaseConfig.resx">
+      <DependentUpon>DatabaseConfig.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="NotePaper.resx">
       <DependentUpon>NotePaper.cs</DependentUpon>

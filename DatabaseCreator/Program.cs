@@ -305,7 +305,7 @@ namespace DatabaseCreator
 
                     Console.WriteLine(databasePath);
 
-                    Console.WriteLine("Copy this path and change the connectionPath in HomeLifeSystem.exe.config");
+                    Console.WriteLine("Copy your server & database name and go to home life \n In the Sign Screen press the question mark button and change the fields!");
 
                     Console.ReadLine();
 

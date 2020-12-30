@@ -57,6 +57,7 @@
             this.tb_SignUpNickname = new System.Windows.Forms.TextBox();
             this.tb_SignUpName = new System.Windows.Forms.TextBox();
             this.splitContainer_Main = new System.Windows.Forms.SplitContainer();
+            this.button1 = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage_SignIn.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -382,11 +383,25 @@
             // 
             // splitContainer_Main.Panel2
             // 
+            this.splitContainer_Main.Panel2.Controls.Add(this.button1);
             this.splitContainer_Main.Panel2.Controls.Add(this.lbAppName);
             this.splitContainer_Main.Panel2.Controls.Add(this.tabControl1);
             this.splitContainer_Main.Size = new System.Drawing.Size(420, 640);
             this.splitContainer_Main.SplitterDistance = 32;
             this.splitContainer_Main.TabIndex = 10;
+            // 
+            // button1
+            // 
+            this.button1.FlatAppearance.BorderSize = 0;
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button1.Location = new System.Drawing.Point(385, 569);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(23, 23);
+            this.button1.TabIndex = 10;
+            this.button1.Text = "?";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // SignScreen
             // 
@@ -445,5 +460,6 @@
         private System.Windows.Forms.TextBox tb_SignUpNickname;
         private System.Windows.Forms.Label lbl_SignUpErrors;
         private System.Windows.Forms.CheckBox checkBox_RememberMe;
+        private System.Windows.Forms.Button button1;
     }
 }

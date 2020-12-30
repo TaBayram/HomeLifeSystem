@@ -240,5 +240,11 @@ namespace HomeLifeSystem
             Program.CreateMainScreen(user);
             this.Close();
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            DatabaseConfig databaseConfig = new DatabaseConfig();
+            databaseConfig.ShowDialog();
+        }
     }
 }
