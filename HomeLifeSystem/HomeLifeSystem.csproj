@@ -62,6 +62,7 @@
       <HintPath>..\packages\System.Buffers.4.4.0\lib\netstandard2.0\System.Buffers.dll</HintPath>
     </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Memory.4.5.3\lib\netstandard2.0\System.Memory.dll</HintPath>
@@ -90,47 +91,47 @@
     <Compile Include="BirthdayNotifier.Designer.cs">
       <DependentUpon>BirthdayNotifier.cs</DependentUpon>
     </Compile>
-    <Compile Include="BusyTime.cs" />
-    <Compile Include="CalendarFilterPopUp.cs">
+    <Compile Include="models\BusyTime.cs" />
+    <Compile Include="usercontrols\CalendarFilterPopUp.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="CalendarFilterPopUp.Designer.cs">
+    <Compile Include="usercontrols\CalendarFilterPopUp.Designer.cs">
       <DependentUpon>CalendarFilterPopUp.cs</DependentUpon>
     </Compile>
-    <Compile Include="CalendarInformationPopUp.cs">
+    <Compile Include="usercontrols\CalendarInformationPopUp.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="CalendarInformationPopUp.Designer.cs">
+    <Compile Include="usercontrols\CalendarInformationPopUp.Designer.cs">
       <DependentUpon>CalendarInformationPopUp.cs</DependentUpon>
     </Compile>
-    <Compile Include="CreateBusyTime.cs">
+    <Compile Include="usercontrols\CreateBusyTime.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="CreateBusyTime.Designer.cs">
+    <Compile Include="usercontrols\CreateBusyTime.Designer.cs">
       <DependentUpon>CreateBusyTime.cs</DependentUpon>
     </Compile>
-    <Compile Include="CreateEvent.cs">
+    <Compile Include="usercontrols\CreateEvent.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="CreateEvent.Designer.cs">
+    <Compile Include="usercontrols\CreateEvent.Designer.cs">
       <DependentUpon>CreateEvent.cs</DependentUpon>
     </Compile>
-    <Compile Include="CreateHousework.cs">
+    <Compile Include="usercontrols\CreateHousework.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="CreateHousework.Designer.cs">
+    <Compile Include="usercontrols\CreateHousework.Designer.cs">
       <DependentUpon>CreateHousework.cs</DependentUpon>
     </Compile>
-    <Compile Include="CreateNote.cs">
+    <Compile Include="usercontrols\CreateNote.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="CreateNote.Designer.cs">
+    <Compile Include="usercontrols\CreateNote.Designer.cs">
       <DependentUpon>CreateNote.cs</DependentUpon>
     </Compile>
-    <Compile Include="CreateRequest.cs">
+    <Compile Include="usercontrols\CreateRequest.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="CreateRequest.Designer.cs">
+    <Compile Include="usercontrols\CreateRequest.Designer.cs">
       <DependentUpon>CreateRequest.cs</DependentUpon>
     </Compile>
     <Compile Include="DatabaseConfig.cs">
@@ -139,18 +140,18 @@
     <Compile Include="DatabaseConfig.Designer.cs">
       <DependentUpon>DatabaseConfig.cs</DependentUpon>
     </Compile>
-    <Compile Include="Event.cs" />
-    <Compile Include="Housework.cs" />
-    <Compile Include="NotePaper.cs">
+    <Compile Include="models\Event.cs" />
+    <Compile Include="models\Housework.cs" />
+    <Compile Include="usercontrols\NotePaper.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="NotePaper.Designer.cs">
+    <Compile Include="usercontrols\NotePaper.Designer.cs">
       <DependentUpon>NotePaper.cs</DependentUpon>
     </Compile>
-    <Compile Include="PeopleContainer.cs">
+    <Compile Include="usercontrols\PeopleContainer.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="PeopleContainer.Designer.cs">
+    <Compile Include="usercontrols\PeopleContainer.Designer.cs">
       <DependentUpon>PeopleContainer.cs</DependentUpon>
     </Compile>
     <Compile Include="PersonalInformation.cs">
@@ -159,30 +160,30 @@
     <Compile Include="PersonalInformation.Designer.cs">
       <DependentUpon>PersonalInformation.cs</DependentUpon>
     </Compile>
-    <Compile Include="PersonContainer.cs">
+    <Compile Include="usercontrols\PersonContainer.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="PersonContainer.Designer.cs">
+    <Compile Include="usercontrols\PersonContainer.Designer.cs">
       <DependentUpon>PersonContainer.cs</DependentUpon>
     </Compile>
-    <Compile Include="Request.cs" />
+    <Compile Include="models\Request.cs" />
     <Compile Include="Settings.cs" />
-    <Compile Include="CreateBill.cs">
+    <Compile Include="usercontrols\CreateBill.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="CreateBill.Designer.cs">
+    <Compile Include="usercontrols\CreateBill.Designer.cs">
       <DependentUpon>CreateBill.cs</DependentUpon>
     </Compile>
-    <Compile Include="GenericObjectContainer.cs">
+    <Compile Include="usercontrols\GenericObjectContainer.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="GenericObjectContainer.Designer.cs">
+    <Compile Include="usercontrols\GenericObjectContainer.Designer.cs">
       <DependentUpon>GenericObjectContainer.cs</DependentUpon>
     </Compile>
-    <Compile Include="ViewChores.cs">
+    <Compile Include="usercontrols\ViewChores.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ViewChores.Designer.cs">
+    <Compile Include="usercontrols\ViewChores.Designer.cs">
       <DependentUpon>ViewChores.cs</DependentUpon>
     </Compile>
     <Compile Include="ViewList.cs">
@@ -191,38 +192,38 @@
     <Compile Include="ViewList.Designer.cs">
       <DependentUpon>ViewList.cs</DependentUpon>
     </Compile>
-    <Compile Include="ViewRoomList.cs">
+    <Compile Include="usercontrols\ViewRoomList.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ViewRoomList.Designer.cs">
+    <Compile Include="usercontrols\ViewRoomList.Designer.cs">
       <DependentUpon>ViewRoomList.cs</DependentUpon>
     </Compile>
-    <Compile Include="Bill.cs" />
-    <Compile Include="CalendarEvent.cs" />
-    <Compile Include="Chore.cs" />
-    <Compile Include="CreateHome.cs">
+    <Compile Include="models\Bill.cs" />
+    <Compile Include="models\CalendarEvent.cs" />
+    <Compile Include="models\Chore.cs" />
+    <Compile Include="usercontrols\CreateHome.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="CreateHome.Designer.cs">
+    <Compile Include="usercontrols\CreateHome.Designer.cs">
       <DependentUpon>CreateHome.cs</DependentUpon>
     </Compile>
-    <Compile Include="Database.cs" />
-    <Compile Include="GlobalColorConstants.cs" />
-    <Compile Include="Header.cs">
+    <Compile Include="models\Database.cs" />
+    <Compile Include="models\GlobalColorConstants.cs" />
+    <Compile Include="usercontrols\Header.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Header.Designer.cs">
+    <Compile Include="usercontrols\Header.Designer.cs">
       <DependentUpon>Header.cs</DependentUpon>
     </Compile>
-    <Compile Include="Home.cs" />
+    <Compile Include="models\Home.cs" />
     <Compile Include="MainScreen.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MainScreen.Designer.cs">
       <DependentUpon>MainScreen.cs</DependentUpon>
     </Compile>
-    <Compile Include="Note.cs" />
-    <Compile Include="Person.cs" />
+    <Compile Include="models\Note.cs" />
+    <Compile Include="models\Person.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -236,70 +237,70 @@
     <Compile Include="SignScreen.Designer.cs">
       <DependentUpon>SignScreen.cs</DependentUpon>
     </Compile>
-    <Compile Include="ViewCalendar.cs">
+    <Compile Include="usercontrols\ViewCalendar.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ViewCalendar.Designer.cs">
+    <Compile Include="usercontrols\ViewCalendar.Designer.cs">
       <DependentUpon>ViewCalendar.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="BirthdayNotifier.resx">
       <DependentUpon>BirthdayNotifier.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CalendarFilterPopUp.resx">
+    <EmbeddedResource Include="usercontrols\CalendarFilterPopUp.resx">
       <DependentUpon>CalendarFilterPopUp.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CalendarInformationPopUp.resx">
+    <EmbeddedResource Include="usercontrols\CalendarInformationPopUp.resx">
       <DependentUpon>CalendarInformationPopUp.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CreateBusyTime.resx">
+    <EmbeddedResource Include="usercontrols\CreateBusyTime.resx">
       <DependentUpon>CreateBusyTime.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CreateEvent.resx">
+    <EmbeddedResource Include="usercontrols\CreateEvent.resx">
       <DependentUpon>CreateEvent.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CreateHousework.resx">
+    <EmbeddedResource Include="usercontrols\CreateHousework.resx">
       <DependentUpon>CreateHousework.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CreateNote.resx">
+    <EmbeddedResource Include="usercontrols\CreateNote.resx">
       <DependentUpon>CreateNote.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CreateRequest.resx">
+    <EmbeddedResource Include="usercontrols\CreateRequest.resx">
       <DependentUpon>CreateRequest.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DatabaseConfig.resx">
       <DependentUpon>DatabaseConfig.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="NotePaper.resx">
+    <EmbeddedResource Include="usercontrols\NotePaper.resx">
       <DependentUpon>NotePaper.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PeopleContainer.resx">
+    <EmbeddedResource Include="usercontrols\PeopleContainer.resx">
       <DependentUpon>PeopleContainer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PersonalInformation.resx">
       <DependentUpon>PersonalInformation.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PersonContainer.resx">
+    <EmbeddedResource Include="usercontrols\PersonContainer.resx">
       <DependentUpon>PersonContainer.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CreateBill.resx">
+    <EmbeddedResource Include="usercontrols\CreateBill.resx">
       <DependentUpon>CreateBill.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GenericObjectContainer.resx">
+    <EmbeddedResource Include="usercontrols\GenericObjectContainer.resx">
       <DependentUpon>GenericObjectContainer.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ViewChores.resx">
+    <EmbeddedResource Include="usercontrols\ViewChores.resx">
       <DependentUpon>ViewChores.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ViewList.resx">
       <DependentUpon>ViewList.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ViewRoomList.resx">
+    <EmbeddedResource Include="usercontrols\ViewRoomList.resx">
       <DependentUpon>ViewRoomList.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CreateHome.resx">
+    <EmbeddedResource Include="usercontrols\CreateHome.resx">
       <DependentUpon>CreateHome.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Header.resx">
+    <EmbeddedResource Include="usercontrols\Header.resx">
       <DependentUpon>Header.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainScreen.resx">
@@ -313,7 +314,7 @@
     <EmbeddedResource Include="SignScreen.resx">
       <DependentUpon>SignScreen.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ViewCalendar.resx">
+    <EmbeddedResource Include="usercontrols\ViewCalendar.resx">
       <DependentUpon>ViewCalendar.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
@@ -347,6 +348,11 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="DatabaseSetup.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

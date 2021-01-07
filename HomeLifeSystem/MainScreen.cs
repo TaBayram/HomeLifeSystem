@@ -186,9 +186,10 @@ namespace HomeLifeSystem
                 }
 
                 bool alreadyExists = false;
-                foreach (NotePaper notepaper in panel_HomeNotes.Controls)
+                for(int i = 0; i < panel_HomeNotes.Controls.Count; i++)
                 {
-                    if (notepaper.Note.ID == note.ID)
+                    if (panel_HomeNotes.Controls[i].GetType() != typeof(NotePaper)) continue;
+                    if (((NotePaper)panel_HomeNotes.Controls[i]).Note.ID == note.ID)
                     {
                         alreadyExists = true;
                         break;
@@ -210,9 +211,10 @@ namespace HomeLifeSystem
             {
                 note.AuthorName = "You";
                 bool alreadyExists = false;
-                foreach (NotePaper notepaper in panel_PrivateNotes.Controls)
+                for (int i = 0; i < panel_PrivateNotes.Controls.Count; i++)
                 {
-                    if (notepaper.Note.ID == note.ID)
+                    if (panel_PrivateNotes.Controls[i].GetType() != typeof(NotePaper)) continue;
+                    if (((NotePaper)panel_PrivateNotes.Controls[i]).Note.ID == note.ID)
                     {
                         alreadyExists = true;
                         break;
@@ -493,6 +495,7 @@ namespace HomeLifeSystem
         public void ShowHomeSidebar(Home home)
         {
             this.home = home;
+            this.user.HomeID = home.ID;
             HideFindingHome(true);
             groupBox_HomeOptions.Visible = true;
             HideThisShowMainScreen(null);

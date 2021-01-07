@@ -149,7 +149,6 @@ namespace HomeLifeSystem
 
             name = tb_HomeName.Text;
             Home home = new Home(user, name, rooms,address);
-            home.AddToDatabase();
 
             form.ShowHomeSidebar(home);
             

@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
 using System.Data;
+using System.Text.RegularExpressions;
+using System.Configuration;
 
 namespace HomeLifeSystem
 {
@@ -441,7 +443,7 @@ namespace HomeLifeSystem
         {
             if (!ConnectToDatabase()) return false;
 
-            string sqlCMD = $"DELETE * FROM Home WHERE ID='{home.ID}'";
+            string sqlCMD = $"DELETE FROM Home WHERE ID='{home.ID}'";
             SqlCommand command = new SqlCommand(sqlCMD, connection);
             command.ExecuteNonQuery();
 
@@ -449,7 +451,7 @@ namespace HomeLifeSystem
             command = new SqlCommand(sqlCMD, connection);
             command.ExecuteNonQuery();*/
 
-            sqlCMD = $"UPDATE * Person SET homeID = 0 WHERE homeID='{home.ID}'";
+            sqlCMD = $"UPDATE Person SET homeID = 0 WHERE homeID='{home.ID}'";
             command = new SqlCommand(sqlCMD, connection);
             command.ExecuteNonQuery();
 
@@ -545,7 +547,7 @@ namespace HomeLifeSystem
         public static List<Note> NoteTableGetByID(int homeID=0,int personID=0)
         {
             string sqlCMD = $"SELECT * FROM Note WHERE homeID='{homeID}'";
-            if(homeID == 0) sqlCMD = $"SELECT * FROM Note WHERE personID='{personID}'";
+            if(homeID == 0) sqlCMD = $"SELECT * FROM Note WHERE personID='{personID}' AND homeID = 0";
 
             DataTable dataTable = GetDataTable(sqlCMD);
             List<Note> notes = new List<Note>();
@@ -1223,6 +1225,76 @@ namespace HomeLifeSystem
             string title = "Database Error";
             MessageBoxButtons buttons = MessageBoxButtons.OK;
             DialogResult result = MessageBox.Show(message, title, buttons, MessageBoxIcon.Error);
+        }
+
+        public static void WriteConfigParameter(string key, string value)
+        {
+
+            try
+            {
+                Configuration configuration = ConfigurationManager.OpenExeConfiguration(Application.ExecutablePath);
+                configuration.AppSettings.Settings[key].Value = value;
+                configuration.Save(ConfigurationSaveMode.Modified);
+                ConfigurationManager.RefreshSection("appSettings");
+            }
+            catch(Exception e)
+            {
+                throw new Exception("Error Read " + e.Message);
+            }
+        }
+        public static string ReadConfigParameter(string key)
+        {
+
+            try
+            {
+                Configuration configuration = ConfigurationManager.OpenExeConfiguration(Application.ExecutablePath);
+                return configuration.AppSettings.Settings[key].Value;
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Error Read " + e.Message);
+            }
+        }
+
+
+
+        public static string ReadConnectionConfig()
+        {
+            return Properties.Settings.Default.connectionPath;
+        }
+
+        public static void CreateDatabase(string sqlScript, string connection)
+        {
+            try
+            {
+                SqlConnection sqlConnection = new SqlConnection(connection);
+                sqlConnection.Open();
+
+                if(sqlConnection.State == System.Data.ConnectionState.Open)
+                {
+                    List<string> sqlScripts = new List<string>();
+                    sqlScripts.AddRange(Regex.Split(input: sqlScript, @"^\s*GO\s*$", RegexOptions.Multiline | RegexOptions.IgnoreCase));
+
+                    foreach (string script in sqlScripts)
+                    {
+                        if (!string.IsNullOrWhiteSpace(script))
+                        {
+                            SqlCommand sqlCommand = new SqlCommand(script, sqlConnection);
+                            sqlCommand.ExecuteNonQuery();
+                        }
+                    }
+
+                }
+                else
+                {
+                    throw new Exception();
+                }
+
+            }
+            catch(Exception e)
+            {
+                throw new Exception(e.Message);
+            }
         }
     }
 }

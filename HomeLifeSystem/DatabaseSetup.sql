@@ -1,0 +1,395 @@
+USE [master]
+GO
+/****** Object:  Database {databaseName}    Script Date: 07/01/2021 12:01:02 ******/
+CREATE DATABASE {databaseName}
+ CONTAINMENT = NONE
+ ON  PRIMARY 
+( NAME = N'HomeLife', FILENAME = N'{primaryFilePath}' , SIZE = 8192KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
+ LOG ON 
+( NAME = N'HomeLife_log', FILENAME = N'{logFilePath}' , SIZE = 8192KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
+ WITH CATALOG_COLLATION = DATABASE_DEFAULT
+GO
+ALTER DATABASE {databaseName} SET COMPATIBILITY_LEVEL = 150
+GO
+IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
+begin
+EXEC {databaseName}.[dbo].[sp_fulltext_database] @action = 'enable'
+end
+GO
+ALTER DATABASE {databaseName} SET ANSI_NULL_DEFAULT OFF 
+GO
+ALTER DATABASE {databaseName} SET ANSI_NULLS OFF 
+GO
+ALTER DATABASE {databaseName} SET ANSI_PADDING OFF 
+GO
+ALTER DATABASE {databaseName} SET ANSI_WARNINGS OFF 
+GO
+ALTER DATABASE {databaseName} SET ARITHABORT OFF 
+GO
+ALTER DATABASE {databaseName} SET AUTO_CLOSE OFF 
+GO
+ALTER DATABASE {databaseName} SET AUTO_SHRINK OFF 
+GO
+ALTER DATABASE {databaseName} SET AUTO_UPDATE_STATISTICS ON 
+GO
+ALTER DATABASE {databaseName} SET CURSOR_CLOSE_ON_COMMIT OFF 
+GO
+ALTER DATABASE {databaseName} SET CURSOR_DEFAULT  GLOBAL 
+GO
+ALTER DATABASE {databaseName} SET CONCAT_NULL_YIELDS_NULL OFF 
+GO
+ALTER DATABASE {databaseName} SET NUMERIC_ROUNDABORT OFF 
+GO
+ALTER DATABASE {databaseName} SET QUOTED_IDENTIFIER OFF 
+GO
+ALTER DATABASE {databaseName} SET RECURSIVE_TRIGGERS OFF 
+GO
+ALTER DATABASE {databaseName} SET  DISABLE_BROKER 
+GO
+ALTER DATABASE {databaseName} SET AUTO_UPDATE_STATISTICS_ASYNC OFF 
+GO
+ALTER DATABASE {databaseName} SET DATE_CORRELATION_OPTIMIZATION OFF 
+GO
+ALTER DATABASE {databaseName} SET TRUSTWORTHY OFF 
+GO
+ALTER DATABASE {databaseName} SET ALLOW_SNAPSHOT_ISOLATION OFF 
+GO
+ALTER DATABASE {databaseName} SET PARAMETERIZATION SIMPLE 
+GO
+ALTER DATABASE {databaseName} SET READ_COMMITTED_SNAPSHOT OFF 
+GO
+ALTER DATABASE {databaseName} SET HONOR_BROKER_PRIORITY OFF 
+GO
+ALTER DATABASE {databaseName} SET RECOVERY FULL 
+GO
+ALTER DATABASE {databaseName} SET  MULTI_USER 
+GO
+ALTER DATABASE {databaseName} SET PAGE_VERIFY CHECKSUM  
+GO
+ALTER DATABASE {databaseName} SET DB_CHAINING OFF 
+GO
+ALTER DATABASE {databaseName} SET FILESTREAM( NON_TRANSACTED_ACCESS = OFF ) 
+GO
+ALTER DATABASE {databaseName} SET TARGET_RECOVERY_TIME = 60 SECONDS 
+GO
+ALTER DATABASE {databaseName} SET DELAYED_DURABILITY = DISABLED 
+GO
+EXEC sys.sp_db_vardecimal_storage_format N'HomeLife', N'ON'
+GO
+ALTER DATABASE {databaseName} SET QUERY_STORE = OFF
+GO
+USE {databaseName}
+GO
+/****** Object:  Table [dbo].[Bill]    Script Date: 07/01/2021 12:01:02 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Bill](
+	[ID] [int] IDENTITY(100,1) NOT NULL,
+	[name] [nvarchar](50) NOT NULL,
+	[type] [nvarchar](50) NOT NULL,
+	[cost] [int] NOT NULL,
+	[currency] [nvarchar](50) NOT NULL,
+	[paymentDue] [date] NOT NULL,
+	[homeID] [int] NOT NULL,
+	[frequency] [int] NOT NULL,
+ CONSTRAINT [PK_Bill] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[BusyTime]    Script Date: 07/01/2021 12:01:02 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[BusyTime](
+	[ID] [int] IDENTITY(100,1) NOT NULL,
+	[name] [nvarchar](16) NOT NULL,
+	[type] [nvarchar](32) NOT NULL,
+	[description] [nvarchar](64) NOT NULL,
+	[frequency] [nvarchar](20) NOT NULL,
+	[personID] [int] NOT NULL,
+	[startTime] [time](7) NOT NULL,
+	[endTime] [time](7) NOT NULL,
+ CONSTRAINT [PK_BusyTime] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[CalendarEvent]    Script Date: 07/01/2021 12:01:02 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[CalendarEvent](
+	[ID] [int] IDENTITY(1000,2) NOT NULL,
+	[homeID] [int] NULL,
+	[personID] [int] NULL,
+ CONSTRAINT [PK_CalendarEvent] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Chore]    Script Date: 07/01/2021 12:01:02 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Chore](
+	[ID] [int] IDENTITY(100,1) NOT NULL,
+	[name] [nvarchar](16) NOT NULL,
+	[type] [nvarchar](32) NOT NULL,
+	[description] [nvarchar](64) NOT NULL,
+	[question1] [nvarchar](32) NULL,
+	[question2] [nvarchar](32) NULL,
+	[question3] [nvarchar](32) NULL,
+	[frequency] [nvarchar](32) NOT NULL,
+	[homeID] [int] NOT NULL,
+ CONSTRAINT [PK_Chore] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Event]    Script Date: 07/01/2021 12:01:02 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Event](
+	[ID] [int] IDENTITY(100,1) NOT NULL,
+	[name] [nvarchar](16) NOT NULL,
+	[type] [nvarchar](32) NOT NULL,
+	[description] [nvarchar](64) NOT NULL,
+	[homeID] [int] NOT NULL,
+ CONSTRAINT [PK_Event] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Home]    Script Date: 07/01/2021 12:01:02 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Home](
+	[ID] [int] IDENTITY(1000,1) NOT NULL,
+	[name] [nvarchar](32) NOT NULL,
+	[address] [nvarchar](128) NULL,
+	[calendarID] [int] NULL,
+	[creatorID] [int] NULL,
+ CONSTRAINT [PK_Home] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Housework]    Script Date: 07/01/2021 12:01:02 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Housework](
+	[ID] [int] IDENTITY(100,1) NOT NULL,
+	[answer1] [nvarchar](64) NULL,
+	[answer2] [nvarchar](64) NULL,
+	[answer3] [nvarchar](64) NULL,
+	[choreID] [int] NOT NULL,
+	[homeID] [int] NOT NULL,
+ CONSTRAINT [PK_Housework] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Note]    Script Date: 07/01/2021 12:01:02 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Note](
+	[ID] [int] IDENTITY(100,1) NOT NULL,
+	[author] [nvarchar](32) NOT NULL,
+	[title] [nvarchar](32) NOT NULL,
+	[text] [nvarchar](128) NOT NULL,
+	[createdDate] [datetime] NOT NULL,
+	[expiringDate] [datetime] NOT NULL,
+	[homeID] [int] NULL,
+	[personID] [int] NULL,
+ CONSTRAINT [PK_Note] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Occasion]    Script Date: 07/01/2021 12:01:02 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Occasion](
+	[ID] [int] IDENTITY(100,1) NOT NULL,
+	[calendarID] [int] NOT NULL,
+	[startdate] [datetime] NOT NULL,
+	[enddate] [datetime] NOT NULL,
+	[personID] [int] NOT NULL,
+	[houseworkID] [int] NULL,
+	[requestID] [int] NULL,
+	[eventID] [int] NULL,
+ CONSTRAINT [PK_Occasion] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Person]    Script Date: 07/01/2021 12:01:02 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Person](
+	[ID] [int] IDENTITY(1000,1) NOT NULL,
+	[nickname] [nvarchar](50) NOT NULL,
+	[name] [nvarchar](50) NOT NULL,
+	[surname] [nvarchar](50) NOT NULL,
+	[gender] [nvarchar](50) NOT NULL,
+	[birthday] [datetime] NOT NULL,
+	[password] [nvarchar](50) NOT NULL,
+	[homeID] [int] NULL,
+ CONSTRAINT [PK_Person] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Request]    Script Date: 07/01/2021 12:01:02 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Request](
+	[ID] [int] IDENTITY(100,1) NOT NULL,
+	[name] [nvarchar](16) NOT NULL,
+	[description] [nvarchar](64) NOT NULL,
+	[accepterID] [int] NULL,
+	[accepterName] [nvarchar](50) NULL,
+	[homeID] [int] NOT NULL,
+ CONSTRAINT [PK_Request] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Room]    Script Date: 07/01/2021 12:01:02 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Room](
+	[ID] [int] IDENTITY(100,1) NOT NULL,
+	[name] [nvarchar](32) NOT NULL,
+	[type] [nvarchar](32) NOT NULL,
+	[homeID] [int] NOT NULL,
+ CONSTRAINT [PK_Room] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[Person] ADD  CONSTRAINT [DF_Person_homeID]  DEFAULT ((0)) FOR [homeID]
+GO
+ALTER TABLE [dbo].[Request] ADD  CONSTRAINT [DF_Request_acccepterID]  DEFAULT ((0)) FOR [accepterID]
+GO
+ALTER TABLE [dbo].[Bill]  WITH CHECK ADD  CONSTRAINT [FK_Bill_Home] FOREIGN KEY([homeID])
+REFERENCES [dbo].[Home] ([ID])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[Bill] CHECK CONSTRAINT [FK_Bill_Home]
+GO
+ALTER TABLE [dbo].[BusyTime]  WITH CHECK ADD  CONSTRAINT [FK_BusyTime_Person] FOREIGN KEY([personID])
+REFERENCES [dbo].[Person] ([ID])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[BusyTime] CHECK CONSTRAINT [FK_BusyTime_Person]
+GO
+ALTER TABLE [dbo].[CalendarEvent]  WITH CHECK ADD  CONSTRAINT [FK_CalendarEvent_Home] FOREIGN KEY([homeID])
+REFERENCES [dbo].[Home] ([ID])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[CalendarEvent] CHECK CONSTRAINT [FK_CalendarEvent_Home]
+GO
+ALTER TABLE [dbo].[CalendarEvent]  WITH CHECK ADD  CONSTRAINT [FK_CalendarEvent_Person] FOREIGN KEY([personID])
+REFERENCES [dbo].[Person] ([ID])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[CalendarEvent] CHECK CONSTRAINT [FK_CalendarEvent_Person]
+GO
+ALTER TABLE [dbo].[Chore]  WITH CHECK ADD  CONSTRAINT [FK_Chore_Home] FOREIGN KEY([homeID])
+REFERENCES [dbo].[Home] ([ID])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[Chore] CHECK CONSTRAINT [FK_Chore_Home]
+GO
+ALTER TABLE [dbo].[Event]  WITH CHECK ADD  CONSTRAINT [FK_Event_Home] FOREIGN KEY([homeID])
+REFERENCES [dbo].[Home] ([ID])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[Event] CHECK CONSTRAINT [FK_Event_Home]
+GO
+ALTER TABLE [dbo].[Housework]  WITH CHECK ADD  CONSTRAINT [FK_Housework_Chore] FOREIGN KEY([choreID])
+REFERENCES [dbo].[Chore] ([ID])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[Housework] CHECK CONSTRAINT [FK_Housework_Chore]
+GO
+ALTER TABLE [dbo].[Housework]  WITH CHECK ADD  CONSTRAINT [FK_Housework_Home] FOREIGN KEY([homeID])
+REFERENCES [dbo].[Home] ([ID])
+GO
+ALTER TABLE [dbo].[Housework] CHECK CONSTRAINT [FK_Housework_Home]
+GO
+ALTER TABLE [dbo].[Note]  WITH NOCHECK ADD  CONSTRAINT [FK_Note_Home] FOREIGN KEY([homeID])
+REFERENCES [dbo].[Home] ([ID])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[Note] NOCHECK CONSTRAINT [FK_Note_Home]
+GO
+ALTER TABLE [dbo].[Note]  WITH NOCHECK ADD  CONSTRAINT [FK_Note_Person] FOREIGN KEY([personID])
+REFERENCES [dbo].[Person] ([ID])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[Note] NOCHECK CONSTRAINT [FK_Note_Person]
+GO
+ALTER TABLE [dbo].[Occasion]  WITH CHECK ADD  CONSTRAINT [FK_Occasion_CalendarEvent] FOREIGN KEY([calendarID])
+REFERENCES [dbo].[CalendarEvent] ([ID])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[Occasion] CHECK CONSTRAINT [FK_Occasion_CalendarEvent]
+GO
+ALTER TABLE [dbo].[Person]  WITH NOCHECK ADD  CONSTRAINT [FK_Person_Home] FOREIGN KEY([homeID])
+REFERENCES [dbo].[Home] ([ID])
+ON DELETE SET NULL
+GO
+ALTER TABLE [dbo].[Person] NOCHECK CONSTRAINT [FK_Person_Home]
+GO
+ALTER TABLE [dbo].[Request]  WITH CHECK ADD  CONSTRAINT [FK_Request_Home] FOREIGN KEY([homeID])
+REFERENCES [dbo].[Home] ([ID])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[Request] CHECK CONSTRAINT [FK_Request_Home]
+GO
+ALTER TABLE [dbo].[Room]  WITH CHECK ADD  CONSTRAINT [FK_Room_Home] FOREIGN KEY([homeID])
+REFERENCES [dbo].[Home] ([ID])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[Room] CHECK CONSTRAINT [FK_Room_Home]
+GO
+USE [master]
+GO
+ALTER DATABASE {databaseName} SET  READ_WRITE 
+GO

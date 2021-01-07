@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,8 +20,8 @@ namespace HomeLifeSystem
             string[] splitpath = Properties.Settings.Default.connectionPath.Split(';');
             //"Server = GREENANGEL; Database = HomeLife; Trusted_Connection = True;"
 
-            textBox1.Text = splitpath[0].Split('=')[1].Trim();
-            textBox2.Text = splitpath[1].Split('=')[1].Trim();
+            textBox_Server.Text = splitpath[0].Split('=')[1].Trim();
+            textBox_Database.Text = splitpath[1].Split('=')[1].Trim();
 
 
 
@@ -28,15 +29,58 @@ namespace HomeLifeSystem
 
         private void button_Save_Click(object sender, EventArgs e)
         {
-            string server = textBox1.Text;
-            string database = textBox2.Text;
+            string server = textBox_Server.Text.Trim();
+            string database = textBox_Database.Text.Trim();
+            string filePath = textBox_Path.Text.Trim();
+            string userName = textBox_UserName.Text.Trim();
+            string userPassword = textBox_UserName.Text.Trim();
 
-            string path = $"Server ={server}; Database ={database}; Trusted_Connection = True;";
+            string path;
+            string masterPath;
+
+            if (checkBox1.Checked)
+            {
+                path = $"Server ={server}; Database ={database}; Trusted_Connection = True;";
+                masterPath = $"Server ={server}; Database =master; Trusted_Connection = True;";
+
+            }
+            else
+            {
+                path = $"Server ={server}; Database ={database};User Id={userName};Password={userPassword};";
+                masterPath = $"Server ={server}; Database =master;User Id={userName};Password={userPassword};";
+                Database.WriteConfigParameter("userid", userName);
+                Database.WriteConfigParameter("userpassword", userPassword);
+
+            }
+
             Properties.Settings.Default.connectionPath = path;
             Properties.Settings.Default.Save();
 
-            string message = "Saved Changes Successfully";
-            string title = "Saved";
+            Database.WriteConfigParameter("server", server);
+            Database.WriteConfigParameter("database", database);
+            Database.WriteConfigParameter("path", filePath);
+
+
+
+            string scriptpath = Database.ReadConfigParameter("scriptpath");
+
+            if (!File.Exists(scriptpath))
+                throw new Exception("hmm");
+            string sqlScript = File.ReadAllText(scriptpath);
+
+
+            sqlScript = sqlScript.Replace("{databaseName}", database);
+            sqlScript = sqlScript.Replace("{primaryFilePath}", filePath +"\\" + database + ".mdf");
+            sqlScript = sqlScript.Replace("{logFilePath}", filePath + "\\" + database + "_log.ldf");
+            
+
+
+
+
+            Database.CreateDatabase(sqlScript, masterPath);
+
+            string message = "Configuration is completed!";
+            string title = "Success";
             if(DialogResult.OK ==  MessageBox.Show(message, title, MessageBoxButtons.OK))
             {
                 this.Close();
@@ -47,6 +91,30 @@ namespace HomeLifeSystem
         private void button1_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            var checkBox = (CheckBox)sender;
+            if (checkBox.Checked)
+            {
+                textBox_UserName.Enabled = false;
+                textBox_UserPassword.Enabled = false;
+            }
+            else
+            {
+                textBox_UserName.Enabled = true;
+                textBox_UserPassword.Enabled = true;
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog();
+            if(folderBrowserDialog.ShowDialog() == DialogResult.OK)
+            {
+                textBox_Path.Text = folderBrowserDialog.SelectedPath;
+            }
         }
     }
 }
