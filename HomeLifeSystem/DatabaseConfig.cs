@@ -29,61 +29,73 @@ namespace HomeLifeSystem
 
         private void button_Save_Click(object sender, EventArgs e)
         {
-            string server = textBox_Server.Text.Trim();
-            string database = textBox_Database.Text.Trim();
-            string filePath = textBox_Path.Text.Trim();
-            string userName = textBox_UserName.Text.Trim();
-            string userPassword = textBox_UserName.Text.Trim();
-
-            string path;
-            string masterPath;
-
-            if (checkBox1.Checked)
+            try
             {
-                path = $"Server ={server}; Database ={database}; Trusted_Connection = True;";
-                masterPath = $"Server ={server}; Database =master; Trusted_Connection = True;";
+                string server = textBox_Server.Text.Trim();
+                string database = textBox_Database.Text.Trim();
+                string filePath = textBox_Path.Text.Trim();
+                string userName = textBox_UserName.Text.Trim();
+                string userPassword = textBox_UserName.Text.Trim();
+
+                string path;
+                string masterPath;
+
+                if (checkBox1.Checked)
+                {
+                    path = $"Server ={server}; Database ={database}; Trusted_Connection = True;";
+                    masterPath = $"Server ={server}; Database =master; Trusted_Connection = True;";
+
+                }
+                else
+                {
+                    path = $"Server ={server}; Database ={database};User Id={userName};Password={userPassword};";
+                    masterPath = $"Server ={server}; Database =master;User Id={userName};Password={userPassword};";
+                    Database.WriteConfigParameter("userid", userName);
+                    Database.WriteConfigParameter("userpassword", userPassword);
+
+                }
+
+                Properties.Settings.Default.connectionPath = path;
+                Properties.Settings.Default.Save();
+
+                Database.WriteConfigParameter("server", server);
+                Database.WriteConfigParameter("database", database);
+                Database.WriteConfigParameter("path", filePath);
+
+
+
+                string scriptpath = Database.ReadConfigParameter("scriptpath");
+
+                if (!File.Exists(scriptpath))
+                {
+                    throw new Exception("Setup file doesn't exist");
+                    
+                }
+                string sqlScript = File.ReadAllText(scriptpath);
+
+
+                sqlScript = sqlScript.Replace("{databaseName}", database);
+                sqlScript = sqlScript.Replace("{primaryFilePath}", filePath + "\\" + database + ".mdf");
+                sqlScript = sqlScript.Replace("{logFilePath}", filePath + "\\" + database + "_log.ldf");
+
+
+
+
+
+                bool cont = Database.CreateDatabase(sqlScript, masterPath);
+                if (!cont) return;
+
+                string message = "Configuration is completed!";
+                string title = "Success";
+                if (DialogResult.OK == MessageBox.Show(message, title, MessageBoxButtons.OK))
+                {
+                    this.Close();
+                }
 
             }
-            else
+            catch(Exception exception)
             {
-                path = $"Server ={server}; Database ={database};User Id={userName};Password={userPassword};";
-                masterPath = $"Server ={server}; Database =master;User Id={userName};Password={userPassword};";
-                Database.WriteConfigParameter("userid", userName);
-                Database.WriteConfigParameter("userpassword", userPassword);
-
-            }
-
-            Properties.Settings.Default.connectionPath = path;
-            Properties.Settings.Default.Save();
-
-            Database.WriteConfigParameter("server", server);
-            Database.WriteConfigParameter("database", database);
-            Database.WriteConfigParameter("path", filePath);
-
-
-
-            string scriptpath = Database.ReadConfigParameter("scriptpath");
-
-            if (!File.Exists(scriptpath))
-                throw new Exception("hmm");
-            string sqlScript = File.ReadAllText(scriptpath);
-
-
-            sqlScript = sqlScript.Replace("{databaseName}", database);
-            sqlScript = sqlScript.Replace("{primaryFilePath}", filePath +"\\" + database + ".mdf");
-            sqlScript = sqlScript.Replace("{logFilePath}", filePath + "\\" + database + "_log.ldf");
-            
-
-
-
-
-            Database.CreateDatabase(sqlScript, masterPath);
-
-            string message = "Configuration is completed!";
-            string title = "Success";
-            if(DialogResult.OK ==  MessageBox.Show(message, title, MessageBoxButtons.OK))
-            {
-                this.Close();
+                Database.DatabaseErrorBox(exception.Message);
             }
             
         }

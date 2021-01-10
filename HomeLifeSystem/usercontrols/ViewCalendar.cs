@@ -19,6 +19,7 @@ namespace HomeLifeSystem
         List<Panel> PanelDays = new List<Panel>();
         CalendarEvent calendarEvent;
         Person person;
+        Home home;
 
         CalendarInformationPopUp calendarInformationPopUp;
         CalendarFilterPopUp calendarFilterPopUp;
@@ -31,8 +32,9 @@ namespace HomeLifeSystem
         public CalendarEvent CalendarEvent { get => calendarEvent; set => calendarEvent = value; }
         public List<string> Filters { get => filters; set => filters = value; }
         public Person Person { get => person; set => person = value; }
+        public Home Home { get => home; set => home = value; }
 
-        public ViewCalendar(CalendarEvent calendarEvent,Person person)
+        public ViewCalendar(CalendarEvent calendarEvent,Person person,Home home)
         {
             InitializeComponent();
             this.Dock = DockStyle.Fill;
@@ -61,7 +63,7 @@ namespace HomeLifeSystem
             PanelDays.Add(panel_BigDay6);
             PanelDays.Add(panel_BigDay7);
 
-
+            this.home = home;
             this.person = person;
             this.CalendarEvent = calendarEvent;
 
@@ -869,6 +871,12 @@ namespace HomeLifeSystem
                 else if (type == typeof(Housework))
                 {
                     Database.HouseworkTableRemove(((Housework)occasion[0]).ID);
+
+                }
+
+                if(calendarEvent.Ownership.GetType() == typeof(Person) && type != typeof(BusyTime) && home != null)
+                {
+                    home.Calendar.DeleteOccasion(occasion);
 
                 }
 

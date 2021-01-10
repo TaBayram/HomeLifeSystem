@@ -178,7 +178,16 @@ namespace HomeLifeSystem
         public void DeleteOccasion(List<Object> occasion)
         {
             Database.OccasionTableRemove(occasion);
-            Occasions.Remove(occasion);
+
+            for(int i = 0; i < Occasions.Count; i++)
+            {
+                if(Occasions[i][4] == occasion[4])
+                {
+                    Occasions.Remove(Occasions[i]);
+                    break;
+                }
+            }
+            
         }
 
 

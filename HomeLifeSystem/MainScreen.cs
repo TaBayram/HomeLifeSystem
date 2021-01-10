@@ -323,13 +323,17 @@ namespace HomeLifeSystem
         {
             if (viewPrivateCalendar == null)
             {
-                viewPrivateCalendar = new ViewCalendar(user.Calendar,User);
+                user.Calendar.Occasions.Clear();
+                user.Calendar.Occasions.AddRange(GetMyOccasionsFromHome());
+                viewPrivateCalendar = new ViewCalendar(user.Calendar,User,home);
                 viewPrivateCalendar.Parent = panel_Main;
                 HideOtherShowThis(viewPrivateCalendar);
                 ButtonColorShow((Button)sender);
             }
             else if (!viewPrivateCalendar.Visible)
             {
+                user.Calendar.Occasions.Clear();
+                user.Calendar.Occasions.AddRange(GetMyOccasionsFromHome());
                 HideOtherShowThis(viewPrivateCalendar);
                 ButtonColorShow((Button)sender);
             }
@@ -340,12 +344,34 @@ namespace HomeLifeSystem
             }
         }
 
+        private List<List<Object>> GetMyOccasionsFromHome()
+        {
+            List<List<object>> list = new List<List<object>>();
+            if(home != null && home.Calendar != null)
+            {
+                foreach (List<Object> occasion in home.Calendar.Occasions)
+                {
+                    var person = occasion[3] as Person;
+                    if(person.ID == user.ID)
+                    {
+                        list.Add(occasion);
+                        continue;
+                    }
+
+
+                }
+
+            }
+            return list;
+        }
+
+
         private void btn_ViewHouseCalendar_Click(object sender, EventArgs e)
         {
             
             if (viewCalendar == null)
             {
-                viewCalendar = new ViewCalendar(home.Calendar,User);
+                viewCalendar = new ViewCalendar(home.Calendar,User, home);
                 viewCalendar.Parent = panel_Main;
                 HideOtherShowThis(viewCalendar);
                 ButtonColorShow((Button)sender);

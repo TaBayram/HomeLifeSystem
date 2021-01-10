@@ -15,6 +15,12 @@
     {
         "Entry"
         {
+        "MsmKey" = "8:_76B623BA43B74F7D943417137BB229DE"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_C4E59000B7AF45C78D7DBA7AB96EC5CE"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -50,6 +56,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
             }
         }
         "Release"
@@ -112,6 +126,26 @@
         }
         "File"
         {
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_76B623BA43B74F7D943417137BB229DE"
+            {
+            "SourcePath" = "8:..\\HomeLifeSystem\\bin\\Release\\DatabaseSetup.sql"
+            "TargetName" = "8:DatabaseSetup.sql"
+            "Tag" = "8:"
+            "Folder" = "8:_DF0E6D50698542B7ACA1165F125B5B98"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_C4E59000B7AF45C78D7DBA7AB96EC5CE"
             {
             "SourcePath" = "8:..\\HomeLifeSystem\\assets\\icons8-home-gradlight.ico"
@@ -200,7 +234,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:HomeLifeSetup"
         "ProductCode" = "8:{FEBAB691-C893-4FCB-98D2-BEC461061DBB}"
-        "PackageCode" = "8:{693307D2-17EB-4BF3-8C16-2DB41DEE15E3}"
+        "PackageCode" = "8:{57095CAC-3B2A-4F72-9C6E-F6051BC9064F}"
         "UpgradeCode" = "8:{1784E246-2171-4023-8859-C580E869DCFD}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"

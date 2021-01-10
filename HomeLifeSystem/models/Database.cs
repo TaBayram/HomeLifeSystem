@@ -1220,7 +1220,7 @@ namespace HomeLifeSystem
 
         /* ------------------------- MISC ----------------------*/
 
-        private static void DatabaseErrorBox(string message)
+        public static void DatabaseErrorBox(string message)
         {
             string title = "Database Error";
             MessageBoxButtons buttons = MessageBoxButtons.OK;
@@ -1239,7 +1239,8 @@ namespace HomeLifeSystem
             }
             catch(Exception e)
             {
-                throw new Exception("Error Read " + e.Message);
+                DatabaseErrorBox(e.Message);
+                
             }
         }
         public static string ReadConfigParameter(string key)
@@ -1252,7 +1253,8 @@ namespace HomeLifeSystem
             }
             catch (Exception e)
             {
-                throw new Exception("Error Read " + e.Message);
+                DatabaseErrorBox(e.Message);
+                return null;
             }
         }
 
@@ -1263,7 +1265,7 @@ namespace HomeLifeSystem
             return Properties.Settings.Default.connectionPath;
         }
 
-        public static void CreateDatabase(string sqlScript, string connection)
+        public static bool CreateDatabase(string sqlScript, string connection)
         {
             try
             {
@@ -1284,16 +1286,25 @@ namespace HomeLifeSystem
                         }
                     }
 
+                    return true;
+
                 }
                 else
                 {
-                    throw new Exception();
+                    DatabaseErrorBox("Couldn't connect to server");
+                    return false;
                 }
 
             }
             catch(Exception e)
             {
-                throw new Exception(e.Message);
+                if(e.HResult == -2146232060)
+                {
+                    return false;
+                }
+                DatabaseErrorBox(e.Message);
+
+                return false;
             }
         }
     }
