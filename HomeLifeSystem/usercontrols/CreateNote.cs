@@ -68,7 +68,13 @@ namespace HomeLifeSystem
                 isItPrivate = true;
                 type = "Private";
             }
-            NotePaper notePaper = new NotePaper(new Note(mainScreen.User.Name,textBox1.Text,textBox2.Text, type, dateTimePicker1.Value,mainScreen.home.ID,mainScreen.User.ID));
+            int homeID = 0;
+            if(mainScreen.home != null)
+            {
+                homeID = mainScreen.home.ID;
+            }
+
+            NotePaper notePaper = new NotePaper(new Note(mainScreen.User.Name,textBox1.Text,textBox2.Text, type, dateTimePicker1.Value, homeID, mainScreen.User.ID));
             notePaper.EnableMenuStrip();
             mainScreen.CreateANote(notePaper, isItPrivate);
             ClearControls();

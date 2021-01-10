@@ -28,7 +28,7 @@ namespace HomeLifeSystem
         {
             try
             {
-                connection = new SqlConnection(path);
+                connection = new SqlConnection(path+"Connection Timeout = 5");
                 connection.Open();
                 if (connection.State == System.Data.ConnectionState.Open)
                 {
@@ -620,12 +620,12 @@ namespace HomeLifeSystem
                 question2 = chore.Questions[1];
                 question3 = chore.Questions[2];
             }
-            else if(chore.Questions.Count > 2)
+            else if(chore.Questions.Count > 1)
             {
                 question1 = chore.Questions[0];
                 question2 = chore.Questions[1];
             }
-            else if (chore.Questions.Count > 1)
+            else if (chore.Questions.Count > 0)
             {
                 question1 = chore.Questions[0];
             }
@@ -653,19 +653,19 @@ namespace HomeLifeSystem
                 question2 = chore.Questions[1];
                 question3 = chore.Questions[2];
             }
-            else if (chore.Questions.Count > 2)
+            else if (chore.Questions.Count > 1)
             {
                 question1 = chore.Questions[0];
                 question2 = chore.Questions[1];
             }
-            else if (chore.Questions.Count > 1)
+            else if (chore.Questions.Count > 0)
             {
                 question1 = chore.Questions[0];
             }
 
 
             if (!ConnectToDatabase()) return false;
-            string sqlCMD = "UPDATE Chore SET name=@name, type=@type, description=@description, question1=@question1, question2=@question2, question3=@question3,frequency=@frequency homeID=@homeID WHERE ID = @ID";
+            string sqlCMD = "UPDATE Chore SET name=@name, type=@type, description=@description, question1=@question1, question2=@question2, question3=@question3,frequency=@frequency, homeID=@homeID WHERE ID = @ID";
             SqlCommand command = new SqlCommand(sqlCMD, connection);
 
             command.Parameters.AddWithValue("@ID", chore.ID);
@@ -735,15 +735,17 @@ namespace HomeLifeSystem
                 answer2 = housework.Answers[1];
                 answer3 = housework.Answers[2];
             }
-            else if (housework.Answers.Count > 2)
+            else if (housework.Answers.Count > 1)
             {
                 answer1 = housework.Answers[0];
                 answer2 = housework.Answers[1];
             }
-            else if (housework.Answers.Count > 1)
+            else if (housework.Answers.Count > 0)
             {
-                answer3 = housework.Answers[0];
+                answer1 = housework.Answers[0];
             }
+
+            
 
 
             if (!ConnectToDatabase()) return 0;
@@ -768,14 +770,14 @@ namespace HomeLifeSystem
                 answer2 = housework.Answers[1];
                 answer3 = housework.Answers[2];
             }
-            else if (housework.Answers.Count > 2)
+            else if (housework.Answers.Count > 1)
             {
                 answer1 = housework.Answers[0];
                 answer2 = housework.Answers[1];
             }
-            else if (housework.Answers.Count > 1)
+            else if (housework.Answers.Count > 0)
             {
-                answer3 = housework.Answers[0];
+                answer1 = housework.Answers[0];
             }
 
 
@@ -1269,7 +1271,7 @@ namespace HomeLifeSystem
         {
             try
             {
-                SqlConnection sqlConnection = new SqlConnection(connection);
+                SqlConnection sqlConnection = new SqlConnection(connection+ "Connection Timeout=5");
                 sqlConnection.Open();
 
                 if(sqlConnection.State == System.Data.ConnectionState.Open)
@@ -1297,12 +1299,13 @@ namespace HomeLifeSystem
 
             }
             catch(Exception e)
-            {
+            {   
+                DatabaseErrorBox(e.Message);
                 if(e.HResult == -2146232060)
                 {
                     return false;
                 }
-                DatabaseErrorBox(e.Message);
+                
 
                 return false;
             }

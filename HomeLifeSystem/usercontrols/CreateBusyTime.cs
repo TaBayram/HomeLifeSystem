@@ -134,7 +134,8 @@ namespace HomeLifeSystem
             {
                 BusyTime busyTime = new BusyTime(name, type,description,frequency, mainScreen.User.ID,startDateTime,endDateTime);
                 mainScreen.User.BusyTimes.Add(busyTime);
-                mainScreen.home.BusyTimes.Add(busyTime);
+                if(mainScreen.home != null)
+                    mainScreen.home.BusyTimes.Add(busyTime);
                 ClearBoxes();
                 label_Finished.Text = "Busy Time Created Successfully!";
                 

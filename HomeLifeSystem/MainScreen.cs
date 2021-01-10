@@ -2,12 +2,8 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Data.Entity.Core.Metadata.Edm;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace HomeLifeSystem
@@ -80,7 +76,7 @@ namespace HomeLifeSystem
         {
             if (user.Birthday.ToString("dd/MM") == DateTime.Now.ToString("dd/MM"))
             {
-                string[] birthdaycheck = Properties.Settings.Default.birthday.Split(' ');
+                string[] birthdaycheck = Database.ReadConfigParameter("birthday").Split(' ');
                 bool canCongratulate = true;
                 if (birthdaycheck[1] == DateTime.Now.ToString("yyyy")){
                     if (birthdaycheck[0] == "1")
@@ -93,8 +89,7 @@ namespace HomeLifeSystem
                     BirthdayNotifier birthdayNotifier = new BirthdayNotifier(user);
                     birthdayNotifier.BringToFront();
                     birthdayNotifier.ShowDialog();
-                    Properties.Settings.Default.birthday = "1 " + DateTime.Now.ToString("yyyy");
-                    Properties.Settings.Default.Save();
+                    Database.WriteConfigParameter("birthday", "1 " + DateTime.Now.ToString("yyyy"));
 
                 }
                 
@@ -556,7 +551,8 @@ namespace HomeLifeSystem
         }
 
         private void HideOtherShowThis(UserControl userControl)
-        {   
+        {
+            if (home == null) panel_FindingHome.Hide();
             panel_HomeScreen.Hide();
             userControl.Show();
             if (userControlCurrent == null) { userControlCurrent = userControl; }
@@ -571,6 +567,7 @@ namespace HomeLifeSystem
         {
             if (buttonCurrent != null) ButtonColorHide(buttonCurrent);
             if (userControl != null) userControl.Hide();
+            if (home == null) panel_FindingHome.Show();
             panel_HomeScreen.Show();
         }
 
@@ -583,6 +580,7 @@ namespace HomeLifeSystem
                 userControlCurrent.Hide();
                 userControlCurrent = userControl;
             }
+            
             panel_HomeScreen.Show();
             userControl.Show();
         }

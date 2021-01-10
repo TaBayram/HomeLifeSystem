@@ -105,6 +105,7 @@ namespace HomeLifeSystem
         private void btn_AddRoom_Click(object sender, EventArgs e)
         {
             lbl_RoomTypeError.Visible = false;
+            lbl_RoomListError.Visible = false;
 
             if (comboBox_RoomType.SelectedIndex == -1)
             {
@@ -117,7 +118,14 @@ namespace HomeLifeSystem
             string name = type;
             if (tb_RoomName.Text.Trim() != "")
             {
-                name = tb_RoomName.Text;
+                if (IsTheNameUnique(tb_RoomName.Text))
+                    name = tb_RoomName.Text;
+                else
+                {
+                    lbl_RoomListError.Visible = true;
+                    lbl_RoomListError.Text = "The name already exists!";
+                    return;
+                }
             }
             else
             {
@@ -138,8 +146,34 @@ namespace HomeLifeSystem
                     name = FindAvailableRoomName(type, number + 1);
                 }
             }
+            foreach (Room room in addedRooms)
+            {
+                if (room.Name.StartsWith(name))
+                {
+                    name = FindAvailableRoomName(type, number + 1);
+                }
+            }
             return name;
         }
+        private bool IsTheNameUnique(string name)
+        {
+            foreach (Room room in rooms)
+            {
+                if (room.Name == name)
+                {
+                    return false;
+                }
+            }
+            foreach (Room room in addedRooms)
+            {
+                if (room.Name == name)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
         private void btn_DoneView_Click(object sender, EventArgs e)
         {
             lbl_RoomListError.Visible = false;

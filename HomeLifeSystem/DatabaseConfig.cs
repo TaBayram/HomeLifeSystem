@@ -37,6 +37,25 @@ namespace HomeLifeSystem
                 string userName = textBox_UserName.Text.Trim();
                 string userPassword = textBox_UserName.Text.Trim();
 
+                if (string.IsNullOrWhiteSpace(server))
+                {
+                    Database.DatabaseErrorBox("Server name is null");
+                    return;
+                }
+                if (string.IsNullOrWhiteSpace(database))
+                {
+                    Database.DatabaseErrorBox("database name is null");
+                    return;
+                }
+                if (string.IsNullOrWhiteSpace(filePath))
+                {
+                    Database.DatabaseErrorBox("file path is null");
+                    return;
+                }
+
+
+
+
                 string path;
                 string masterPath;
 
@@ -61,6 +80,9 @@ namespace HomeLifeSystem
                 Database.WriteConfigParameter("server", server);
                 Database.WriteConfigParameter("database", database);
                 Database.WriteConfigParameter("path", filePath);
+                Database.WriteConfigParameter("connectionPath", path);
+
+        
 
 
 

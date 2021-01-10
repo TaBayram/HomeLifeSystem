@@ -4,9 +4,9 @@ GO
 CREATE DATABASE {databaseName}
  CONTAINMENT = NONE
  ON  PRIMARY 
-( NAME = N'HomeLife', FILENAME = N'{primaryFilePath}' , SIZE = 8192KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
+( NAME = N'{databaseName}', FILENAME = N'{primaryFilePath}' , SIZE = 8192KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
  LOG ON 
-( NAME = N'HomeLife_log', FILENAME = N'{logFilePath}' , SIZE = 8192KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
+( NAME = N'{databaseName}_log', FILENAME = N'{logFilePath}' , SIZE = 8192KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
  WITH CATALOG_COLLATION = DATABASE_DEFAULT
 GO
 ALTER DATABASE {databaseName} SET COMPATIBILITY_LEVEL = 150
@@ -74,7 +74,7 @@ ALTER DATABASE {databaseName} SET TARGET_RECOVERY_TIME = 60 SECONDS
 GO
 ALTER DATABASE {databaseName} SET DELAYED_DURABILITY = DISABLED 
 GO
-EXEC sys.sp_db_vardecimal_storage_format N'HomeLife', N'ON'
+EXEC sys.sp_db_vardecimal_storage_format N'{databaseName}', N'ON'
 GO
 ALTER DATABASE {databaseName} SET QUERY_STORE = OFF
 GO
